@@ -33,7 +33,6 @@ class HomeScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 20,),
             const Text('All Todos',
@@ -41,14 +40,11 @@ class HomeScreen extends StatelessWidget {
                 fontSize: 27
               ),
             ),
-            Align(
-              alignment: Alignment.center,
-              child: Column(
-                children: const [
-                  TodoListTile(todo: 'Create ToDo', isDone: false,),
-                  TodoListTile(todo: 'Test Todo list', isDone: true,),
-                ],
-              ),
+            Column(
+              children: const [
+                TodoListTile(todo: 'Create ToDo', isDone: false,),
+                TodoListTile(todo: 'Test Todo list', isDone: true,),
+              ],
             ),
           ],
         ),
