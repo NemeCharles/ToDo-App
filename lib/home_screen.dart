@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'components/modal_sheet.dart';
 import 'components/todo_listile.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -25,11 +26,18 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: const Color(0XFFDDDEE2),
       ),
       backgroundColor: const Color(0XFFEEEFF5),
-      floatingActionButton: const FloatingActionButton(
-        onPressed: null,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            context: context,
+            builder: (context) => const ModalSheet()
+          );
+        },
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       body: SafeArea(
         child: Column(
@@ -52,4 +60,5 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
 
