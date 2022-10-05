@@ -1,25 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/provider/todolist_controller.dart';
 import 'components/modal_sheet.dart';
 import 'components/todo_listile.dart';
+import 'package:get/get.dart';
+
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
-  // final List<TodoModel> todos = [
-  //   TodoModel(task: 'Open An App', isDone: true),
-  //   TodoModel(task: 'Close an App', isDone: false)
-  // ];
-
-
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    TodoListController todoController = Get.put(TodoListController());
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TO DO',
-          style: TextStyle(
-            fontSize: 26,
-            color: Colors.black
-          )
+        toolbarHeight: 70,
+        title: Column(
+          children: const [
+            SizedBox(height: 15,),
+            Text('TO DO',
+              style: TextStyle(
+                fontSize: 26,
+                color: Colors.black
+              )
+            ),
+          ],
         ),
         centerTitle: true,
         elevation: 0,
@@ -40,21 +45,36 @@ class HomeScreen extends StatelessWidget {
         child: const Icon(Icons.add),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(height: 20,),
-            const Text('All Todos',
-              style: TextStyle(
-                fontSize: 27
-              ),
-            ),
-            Column(
-              children: const [
-                TodoListTile(todo: 'Create ToDo', isDone: false,),
-                TodoListTile(todo: 'Test Todo list', isDone: true,),
-              ],
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 10,),
+              GetBuilder<TodoListController>(builder: (_) {
+                return  Column(
+                  children: [
+                    SizedBox(
+                      height: size.height,
+                      child: ListView.builder(itemBuilder: (context, index) {
+                        return  TodoListTile(
+                          todo: todoController.getTasks(index).task,
+                          isDone: todoController.getTasks(index).isDone,
+                          toggleCheckbox: (bool? newValue) {
+                            todoController.toggleCheckbox(index, newValue);
+                          },
+                          delete: (context) {
+                            todoController.removeTask(index);
+                          },
+                        );
+                      },
+                        itemCount: todoController.taskCount,
+                      ),
+                    )
+                  ],
+                );
+              })
+
+            ],
+          ),
         ),
       ),
     );

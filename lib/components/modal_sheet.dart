@@ -1,13 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:todo_app/provider/todolist_controller.dart';
 
-class ModalSheet extends StatelessWidget {
+
+class ModalSheet extends StatefulWidget {
   const ModalSheet({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<ModalSheet> createState() => _ModalSheetState();
+}
+
+class _ModalSheetState extends State<ModalSheet> {
+  final myController = TextEditingController();
+
+  late String newTask;
+  void updateValue() {
+    newTask = myController.text;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    myController.addListener(updateValue);
+  }
+
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    TodoListController todoController = Get.find();
     return Container(
       padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         decoration: const BoxDecoration(
@@ -29,16 +56,17 @@ class ModalSheet extends StatelessWidget {
                         color: Colors.black
                     )
                 ),
-                const TextField(
+                TextField(
+                  controller: myController,
                   cursorColor: Colors.black,
                   textAlign: TextAlign.center,
                   autofocus: true,
                   style: (
-                      TextStyle(
+                      const TextStyle(
                           fontSize: 18
                       )
                   ),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
                               color: Colors.black,
@@ -56,7 +84,11 @@ class ModalSheet extends StatelessWidget {
                 const SizedBox(height: 30),
                 TextButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    if(newTask != null) {
+                      todoController.addTask(newTask);
+                      Navigator.pop(context);
+                    }
+
                   },
                   child: const Text(
                     'Add',

@@ -2,15 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+
 class TodoListTile extends StatelessWidget {
   const TodoListTile({
-    Key? key, required this.todo, required this.isDone,
+    Key? key, required this.todo, required this.isDone, required this.toggleCheckbox, required this.delete,
   }) : super(key: key);
 
   final String todo;
   final  bool isDone;
-  // final void Function(bool?) isDone;
-  // final void Function(BuildContext) delete;
+  final void Function(bool?) toggleCheckbox;
+  final void Function(BuildContext) delete;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class TodoListTile extends StatelessWidget {
           motion: const StretchMotion(),
           children: [
             SlidableAction(
-              onPressed: null,
+              onPressed: delete,
               icon: Icons.delete,
               backgroundColor: Colors.black,
               borderRadius: BorderRadius.circular(10),
@@ -39,7 +40,7 @@ class TodoListTile extends StatelessWidget {
               children: [
                 Checkbox(
                   value: isDone,
-                  onChanged: null,
+                  onChanged: toggleCheckbox,
                   fillColor: MaterialStateProperty.all<Color>(Colors.black),
                 ),
                 Text(todo,
