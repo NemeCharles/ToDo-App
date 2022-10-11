@@ -45,40 +45,44 @@ class HomeScreen extends StatelessWidget {
         child: const Icon(Icons.add),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 10,),
-              GetBuilder<TodoListController>(builder: (_) {
-                return  Column(
-                  children: [
-                    SizedBox(
-                      height: size.height,
-                      child: ListView.builder(itemBuilder: (context, index) {
-                        return  TodoListTile(
-                          todo: todoController.getTasks(index).task,
-                          isDone: todoController.getTasks(index).isDone,
-                          toggleCheckbox: (bool? newValue) {
-                            todoController.toggleCheckbox(index, newValue);
-                          },
-                          delete: (context) {
-                            todoController.removeTask(index);
-                          },
-                        );
-                      },
-                        itemCount: todoController.taskCount,
-                      ),
-                    )
-                  ],
+        child: GetBuilder<TodoListController>(builder: (_) {
+              if(todoController.tasks.isNotEmpty) {
+               return  SingleChildScrollView(
+                 child: Column(
+                   children: [
+                     const SizedBox(height: 10,),
+                     SizedBox(
+                       height: size.height,
+                       child: ListView.builder(itemBuilder: (context, index) {
+                         return  TodoListTile(
+                           todo: todoController.getTasks(index).task,
+                           isDone: todoController.getTasks(index).isDone,
+                           toggleCheckbox: (bool? newValue) {
+                             todoController.toggleCheckbox(index, newValue);
+                           },
+                           delete: (context) {
+                             todoController.removeTask(index);
+                           },
+                         );
+                       },
+                         itemCount: todoController.taskCount,
+                       ),
+                     )
+                   ],
+                 ),
+               );
+              } else {
+                return const Center(
+                  child: Text(
+                      'No Tasks To Do',
+                    style: TextStyle(
+                      fontSize: 22
+                    ),
+                  ),
                 );
-              })
-
-            ],
-          ),
+              }
+            }),
         ),
-      ),
-    );
+      );
   }
 }
-
-

@@ -13,9 +13,10 @@ class ModalSheet extends StatefulWidget {
 }
 
 class _ModalSheetState extends State<ModalSheet> {
-  final myController = TextEditingController();
 
+  final myController = TextEditingController();
   late String newTask;
+
   void updateValue() {
     newTask = myController.text;
   }
@@ -84,11 +85,8 @@ class _ModalSheetState extends State<ModalSheet> {
                 const SizedBox(height: 30),
                 TextButton(
                   onPressed: () {
-                    if(newTask != null) {
-                      todoController.addTask(newTask);
-                      Navigator.pop(context);
-                    }
-
+                    todoController.addTask(newTask);
+                    Navigator.pop(context);
                   },
                   child: const Text(
                     'Add',
