@@ -2,11 +2,11 @@
 
 A new Flutter project.
 
-![Home Screen1](images/home_screen)
+![Home Screen1](images/home_screen1.jpg)
 
-![Add todos Screen](images/add_task_screen)
+![Add todos Screen](images/add_task_screen.jpg)
 
-![Home Screen2](images/home_screen2)
+![Home Screen2](images/home_screen2.jpg)
 
 ## Getting Started
 
