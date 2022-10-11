@@ -2,6 +2,12 @@
 
 A new Flutter project.
 
+![Home Screen1](images/home_screen)
+
+![Add todos Screen](images/add_task_screen)
+
+![Home Screen2](images/home_screen2)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
